@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -11,11 +12,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import ru.tinkoff.ru.seminar.model.ApiService;
 import ru.tinkoff.ru.seminar.model.ApiServiceProvider;
 import ru.tinkoff.ru.seminar.model.Weather;
+import ru.tinkoff.ru.seminar.util.Mapper;
 
 /**
  * Реализовать приложение, показывающее текущую погоду в городе из предложенного списка.
@@ -86,9 +93,10 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(
                 String.format(
-                        "CurrentWeather\nDesc: %s \nTimeUnix: %d\nTemp: %.1f\nSpeed wind: %.1f",
+                        "CurrentWeather\nDesc: %s \nTime: %s\nTemp: %.1f\nSpeed wind: %.1f",
                         weather.description,
-                        weather.time,
+                        SimpleDateFormat.getDateTimeInstance().format(
+                                new Date(weather.time * 1000L)),
                         weather.temp,
                         weather.speedWind
                 )
@@ -98,9 +106,10 @@ public class MainActivity extends AppCompatActivity {
             Weather firstForecastWeather = forecast.get(0);
             stringBuilder.append("\n");
             stringBuilder.append(String.format(
-                    "Forecast\nDesc: %s \nTimeUnix: %d\nTemp: %.1f\nSpeed wind: %.1f",
+                    "Forecast\nDesc: %s \nTime: %s\nTemp: %.1f\nSpeed wind: %.1f",
                     firstForecastWeather.description,
-                    firstForecastWeather.time,
+                    SimpleDateFormat.getDateTimeInstance().format(
+                            new Date(firstForecastWeather.time * 1000L)),
                     firstForecastWeather.temp,
                     firstForecastWeather.speedWind
             ));
@@ -116,9 +125,23 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
+    @SuppressLint("CheckResult")
     private void performRequest(@NonNull String city) {
-        // Здесь необходимо написать свой код.
-        // Вызываем нужные методы в нужном порядке.
+        Single.zip(
+                apiService.getForecast(city, BuildConfig.APP_ID, 1),
+                apiService.getWeather(city, BuildConfig.APP_ID),
+                (forecastResponse, weatherResponse) -> new Pair<>(
+                        Mapper.mapWeatherFromWeatherResponse(weatherResponse),
+                        Mapper.mapForecastFromForecastResponse(forecastResponse)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(__ -> showProgress(true))
+                .doFinally(() -> showProgress(false))
+                .subscribe(weatherListPair -> printResult(weatherListPair.first, weatherListPair.second),
+                        throwable -> {
+                            throwable.printStackTrace();
+                            showError(throwable.getMessage());
+                        });
     }
 }
 

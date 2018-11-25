@@ -11,6 +11,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "API_URL", "\"http://api.openweathermap.org\""
+        buildConfigField "String", "APP_ID", "\"7910f4948b3dcb251ebc828f28d8b30b\""
     }
     buildTypes {
         release {

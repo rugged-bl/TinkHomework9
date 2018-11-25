@@ -9,15 +9,15 @@ import ru.tinkoff.ru.seminar.model.Weather;
 import ru.tinkoff.ru.seminar.model.WeatherEntity.WeatherResponse;
 
 public class Mapper {
-    Weather mapWeatherFromWeatherResponse(WeatherResponse weatherResponse) {
+    public static Weather mapWeatherFromWeatherResponse(WeatherResponse weatherResponse) {
         return new Weather(
                 weatherResponse.getWeather().get(0).description,
                 weatherResponse.getDt(),
-                weatherResponse.getWeather().get(0).temp,
+                (float) weatherResponse.getMain().getTemp(),
                 (float) weatherResponse.getWind().getSpeed());
     }
 
-    List<Weather> mapForecastFromForecastResponse(ForecastResponse forecastResponse) {
+    public static List<Weather> mapForecastFromForecastResponse(ForecastResponse forecastResponse) {
         List<ForecastListElement> list = forecastResponse.getList();
         List<Weather> weatherList = new ArrayList<>(list.size());
 

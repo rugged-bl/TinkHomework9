@@ -10,7 +10,7 @@ public class Wind {
     private double speed;
     @SerializedName("deg")
     @Expose
-    private int deg;
+    private double deg;
 
     public double getSpeed() {
         return speed;
@@ -20,7 +20,7 @@ public class Wind {
         this.speed = speed;
     }
 
-    public int getDeg() {
+    public double getDeg() {
         return deg;
     }
 

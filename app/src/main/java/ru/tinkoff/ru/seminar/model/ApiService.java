@@ -8,9 +8,10 @@ import ru.tinkoff.ru.seminar.model.ForecastEntity.ForecastResponse;
 import ru.tinkoff.ru.seminar.model.WeatherEntity.WeatherResponse;
 
 public interface ApiService {
-    @GET("/data/2.5/weather")
+    @GET("/data/2.5/weather?units=metric")
     Single<WeatherResponse> getWeather(@Query("q") String city, @Query("APPID") String appId);
 
-    @POST("/data/2.5/forecast")
-    Single<ForecastResponse> getForecast(@Query("q") String city, @Query("APPID") String appId);
+    @POST("/data/2.5/forecast?units=metric")
+    Single<ForecastResponse> getForecast(@Query("q") String city, @Query("APPID") String appId,
+                                         @Query("cnt") int count);
 }
