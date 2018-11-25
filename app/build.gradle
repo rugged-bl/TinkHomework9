@@ -42,6 +42,7 @@ ext.versions = [
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$versions.ANDROID_SUPPORT"
+    implementation "com.android.support:design:$versions.ANDROID_SUPPORT"
     implementation "com.android.support.constraint:constraint-layout:$versions.CONSTRAINT_LAYOUT"
 
     // RxJava
