@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("CheckResult")
     private void performRequest(@NonNull String city) {
+        //noinspection ResultOfMethodCallIgnored
         Single.zip(
                 apiService.getForecast(city, BuildConfig.APP_ID, 1),
                 apiService.getWeather(city, BuildConfig.APP_ID),
