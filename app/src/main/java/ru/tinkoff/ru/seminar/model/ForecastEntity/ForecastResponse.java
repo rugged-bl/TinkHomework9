@@ -18,7 +18,7 @@ public class ForecastResponse {
     private int cnt;
     @SerializedName("list")
     @Expose
-    private List<ForecastList> list = null;
+    private List<ForecastListElement> list = null;
     @SerializedName("city")
     @Expose
     private City city;
@@ -47,11 +47,11 @@ public class ForecastResponse {
         this.cnt = cnt;
     }
 
-    public List<ForecastList> getList() {
+    public List<ForecastListElement> getList() {
         return list;
     }
 
-    public void setList(List<ForecastList> list) {
+    public void setList(List<ForecastListElement> list) {
         this.list = list;
     }
 

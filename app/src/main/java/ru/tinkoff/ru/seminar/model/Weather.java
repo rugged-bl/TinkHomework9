@@ -1,4 +1,4 @@
-package ru.tinkoff.ru.seminar;
+package ru.tinkoff.ru.seminar.model;
 
 
 import android.support.annotation.NonNull;

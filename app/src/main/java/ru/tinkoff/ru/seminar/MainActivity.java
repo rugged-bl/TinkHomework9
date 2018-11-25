@@ -15,6 +15,7 @@ import java.util.List;
 
 import ru.tinkoff.ru.seminar.model.ApiService;
 import ru.tinkoff.ru.seminar.model.ApiServiceProvider;
+import ru.tinkoff.ru.seminar.model.Weather;
 
 /**
  * Реализовать приложение, показывающее текущую погоду в городе из предложенного списка.

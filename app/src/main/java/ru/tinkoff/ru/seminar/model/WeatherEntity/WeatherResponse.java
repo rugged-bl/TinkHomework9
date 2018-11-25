@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import ru.tinkoff.ru.seminar.Weather;
+import ru.tinkoff.ru.seminar.model.Weather;
 
 public class WeatherResponse {
     @SerializedName("coord")

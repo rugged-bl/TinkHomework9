@@ -8,7 +8,7 @@ import ru.tinkoff.ru.seminar.model.WeatherEntity.Clouds;
 import ru.tinkoff.ru.seminar.model.WeatherEntity.Weather;
 import ru.tinkoff.ru.seminar.model.WeatherEntity.Wind;
 
-public class ForecastList {
+public class ForecastListElement {
     @SerializedName("dt")
     @Expose
     private int dt;
