@@ -1,9 +1,8 @@
-package ru.tinkoff.ru.seminar.model;
+package ru.tinkoff.ru.seminar;
 
 
 import android.support.annotation.NonNull;
 
-@SuppressWarnings("unused")
 public class Weather {
     public String description;
     public long time;

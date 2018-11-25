@@ -1,9 +1,9 @@
 package ru.tinkoff.ru.seminar;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -13,7 +13,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import ru.tinkoff.ru.seminar.model.Weather;
+import ru.tinkoff.ru.seminar.model.ApiService;
+import ru.tinkoff.ru.seminar.model.ApiServiceProvider;
 
 /**
  * Реализовать приложение, показывающее текущую погоду в городе из предложенного списка.
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView resultTextView;
 
+    private ApiService apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         resultTextView = findViewById(R.id.resultTextView);
         performBtn.setOnClickListener(v -> performRequest(spinner.getSelectedItem().toString()));
+
+        apiService = ApiServiceProvider.provideApiService();
     }
 
     private void setEnablePerformButton(boolean enable) {
